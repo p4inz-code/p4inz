@@ -1,0 +1,33 @@
+[workspace]
+resolver = "3"
+members = [
+    "apps/p4inz",
+    "apps/p4inz-worker",
+    "crates/domain",
+    "crates/application",
+    "crates/infrastructure",
+    "crates/api",
+    "crates/discord",
+    "crates/knowledge",
+    "crates/search",
+    "crates/ai",
+    "crates/security",
+    "crates/observability",
+    "crates/jobs",
+    "crates/database",
+    "crates/config",
+    "crates/errors",
+    "crates/audit",
+    "crates/common",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "Apache-2.0"
+repository = "https://github.com/p4inz-code/p4inz"
+homepage = "https://github.com/p4inz-code/p4inz"
+rust-version = "1.85"
+authors = ["Northbyte Studios"]
+
+[workspace.dependencies]

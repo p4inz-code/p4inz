@@ -1,0 +1,14 @@
+[advisories]
+version = 2
+
+[licenses]
+version = 2
+confidence-threshold = 0.8
+
+[bans]
+multiple-versions = "warn"
+wildcards = "deny"
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"
