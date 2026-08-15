@@ -1,97 +1,192 @@
 # P4inz Roadmap
 
-P4inz is Northbyte Studios' open-source Discord intelligence and community platform.
-
-## Project Status
+## Status
 
 - Planning: COMPLETE
+- Product specification: COMPLETE
 - Architecture: LOCKED
-- Repository foundation: IN PROGRESS
+- Repository foundation: COMPLETE
 - Implementation: NOT STARTED
-- Production: NOT STARTED
+- V1: NOT STARTED
 
-## Implementation Order
+## Development Model
 
-### Phase 1 — Repository Foundation
-- Workspace
+One implementation prompt represents approximately one focused one-hour coding session.
+
+Dedicated audits, security reviews, integration reviews, and final release audits are EXTRA and are not counted as implementation sessions.
+
+Target:
+- Normal implementation range: 30–40 sessions
+- Working target: ~35 sessions
+- Additional sessions are allowed when correctness requires them.
+
+Prompt count is not a quality metric.
+
+## Phase 1 — Core Foundation
+Target: 2–3 sessions
+
 - Configuration
-- Error system
+- Typed errors
+- Common primitives
 - Logging/tracing
-- CI foundation
+- Runtime bootstrap
+- Graceful shutdown
+- Health/readiness
+- Dependency wiring
+- Foundation tests
 
-### Phase 2 — Domain & Database
-- Domain models
-- PostgreSQL
+## Phase 2 — Domain + Database
+Target: 3–4 sessions
+
+- Domain entities
+- Database abstraction
+- PostgreSQL integration
 - Migrations
-- Repository abstractions
+- Repository contracts
 - Transactions
+- Persistence tests
 
-### Phase 3 — Application Layer
-- Services
-- Permissions
-- Business rules
+## Phase 3 — Application Layer
+Target: 2–3 sessions
+
+- Use cases
+- Service boundaries
+- Authorization contracts
+- Application errors
 - Audit events
+- Application tests
 
-### Phase 4 — Discord
-- Gateway
+## Phase 4 — Discord Core
+Target: 3–4 sessions
+
+- Discord gateway
+- Bot lifecycle
 - Slash commands
-- Components
-- Modals
+- Interaction handling
 - Permissions
-- Error handling
+- Rate limiting
+- Error responses
+- Reconnection handling
 
-### Phase 5 — Knowledge
+## Phase 5 — Community Features
+Target: 3–4 sessions
+
+- Information commands
+- Support/ticket integration
+- Applications
+- Partnerships
+- Feedback
+- Notices
+- Administrative workflows
+
+## Phase 6 — Knowledge System
+Target: 4–5 sessions
+
+- Knowledge entities
 - Sources
-- Ingestion
-- Normalization
 - Provenance
-- Verification
 - Versioning
+- Verification
 - Freshness
+- Ingestion
+- Synchronization
 - Conflict detection
+- Controlled administration
 
-### Phase 6 — Search
-- Structured search
+## Phase 7 — Search
+Target: 2–3 sessions
+
+- Structured retrieval
 - Full-text search
-- Semantic search
+- Semantic retrieval where justified
 - Hybrid ranking
+- Permission-aware retrieval
+- Search tests
 
-### Phase 7 — AI
-- Provider abstraction
-- Retrieval-augmented responses
+## Phase 8 — AI
+Target: 3–4 sessions
+
+- AI provider abstraction
+- Retrieval-augmented generation
+- Context assembly
 - Grounding
 - Output validation
-- Safety controls
+- Prompt-injection defenses
+- Provider failure handling
 - Local-model support
 
-### Phase 8 — Community Features
-- Tickets
-- Applications
-- Feedback
-- Partnerships
-- Notices
-- Project/release information
+## Phase 9 — Security Hardening
+Target: 2–3 sessions
 
-### Phase 9 — Security Hardening
-- Threat-model validation
 - Authorization audit
-- Abuse protection
+- Input validation audit
 - Secret handling
-- Webhook security
+- Rate-limit review
+- Webhook verification
 - Data isolation
+- Abuse resistance
 
-### Phase 10 — Production
-- Deployment
-- Backups
+## Phase 10 — Workers + Synchronization
+Target: 2 sessions
+
+- Job execution
+- Retries
+- Scheduling
+- Knowledge synchronization
+- Failure recovery
+- Idempotency
+
+## Phase 11 — Reliability + Testing
+Target: 2–3 sessions
+
+- Integration coverage
+- Failure-path coverage
+- Load/stress testing
+- Restart testing
+- Database failure testing
+- Discord failure testing
+- AI evaluation
+
+## Phase 12 — Production
+Target: 2 sessions
+
+- Docker deployment
+- Environment configuration
+- Health checks
 - Monitoring
-- CI/CD
-- Recovery testing
-- Production readiness audit
+- Backups
+- Restore procedure
+- Deployment documentation
 
-## Rules
+## Phase 13 — Release
+Target: 1–2 sessions
 
-Architecture changes require an ADR.
-Security-critical changes require additional testing.
-No paid service may be a mandatory dependency.
-AI is never the source of truth.
-Unknown information must remain unknown rather than being invented.
+- Versioning
+- Release process
+- Documentation completion
+- Public README
+- Production configuration
+- Final V1 preparation
+
+## Dedicated Review Work
+
+Not included in implementation-session count:
+
+- Architecture reviews
+- Security audits
+- Repository audits
+- Adversarial testing
+- Integration review
+- Final release audit
+
+These should happen between major phases when appropriate.
+
+## Completion Rule
+
+A phase is complete only when:
+- Its implementation is functional.
+- Relevant tests pass.
+- Architecture boundaries remain valid.
+- No known critical security issue remains.
+- Documentation is updated where required.
+- The next phase can safely build on it.
