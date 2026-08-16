@@ -7,3 +7,5 @@ rust-version.workspace = true
 authors.workspace = true
 
 [dependencies]
+p4inz-common = { version = "0.1.0", path = "../common" }
+thiserror = "2.0.20"

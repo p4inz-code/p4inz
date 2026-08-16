@@ -29,5 +29,3 @@ repository = "https://github.com/p4inz-code/p4inz"
 homepage = "https://github.com/p4inz-code/p4inz"
 rust-version = "1.85"
 authors = ["Northbyte Studios"]
-
-[workspace.dependencies]

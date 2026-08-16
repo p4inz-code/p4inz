@@ -7,3 +7,5 @@ rust-version.workspace = true
 authors.workspace = true
 
 [dependencies]
+p4inz-jobs = { version = "0.1.0", path = "../../crates/jobs" }
+tokio = { version = "1.53.1", features = ["rt-multi-thread", "macros"] }

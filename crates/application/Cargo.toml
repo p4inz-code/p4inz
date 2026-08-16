@@ -7,3 +7,14 @@ rust-version.workspace = true
 authors.workspace = true
 
 [dependencies]
+p4inz-ai = { version = "0.1.0", path = "../ai" }
+p4inz-audit = { version = "0.1.0", path = "../audit" }
+p4inz-domain = { version = "0.1.0", path = "../domain" }
+p4inz-errors = { version = "0.1.0", path = "../errors" }
+p4inz-knowledge = { version = "0.1.0", path = "../knowledge" }
+p4inz-security = { version = "0.1.0", path = "../security" }
+thiserror = "2.0.20"
+tracing = { version = "0.1.44", default-features = false, features = ["std"] }
+
+[dev-dependencies]
+tokio = { version = "1.53.1", features = ["macros", "rt"] }

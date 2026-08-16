@@ -30,6 +30,9 @@ jobs:
       - name: Cache
         uses: Swatinem/rust-cache@v2
 
+      - name: Check architecture boundaries
+        run: python3 scripts/ci/check_architecture.py
+
       - name: Check formatting
         run: cargo fmt --all -- --check
 

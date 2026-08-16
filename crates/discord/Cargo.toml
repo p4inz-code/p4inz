@@ -7,3 +7,16 @@ rust-version.workspace = true
 authors.workspace = true
 
 [dependencies]
+async-trait = "0.1.92"
+p4inz-application = { version = "0.1.0", path = "../application" }
+p4inz-audit = { version = "0.1.0", path = "../audit" }
+p4inz-config = { version = "0.1.0", path = "../config" }
+p4inz-errors = { version = "0.1.0", path = "../errors" }
+p4inz-security = { version = "0.1.0", path = "../security" }
+serenity = { version = "0.12.5", default-features = false, features = ["client", "gateway", "model", "rustls_backend"] }
+thiserror = "2.0.20"
+tracing = { version = "0.1.44", default-features = false, features = ["std"] }
+
+[dev-dependencies]
+p4inz-common = { path = "../common" }
+tokio = { version = "1.53.1", features = ["macros", "rt", "time"] }

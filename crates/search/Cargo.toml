@@ -7,3 +7,15 @@ rust-version.workspace = true
 authors.workspace = true
 
 [dependencies]
+p4inz-application = { version = "0.1.0", path = "../application" }
+p4inz-domain = { version = "0.1.0", path = "../domain" }
+p4inz-errors = { version = "0.1.0", path = "../errors" }
+p4inz-knowledge = { version = "0.1.0", path = "../knowledge" }
+sqlx = { version = "0.8.6", default-features = false, features = ["postgres", "runtime-tokio", "tls-rustls", "uuid", "time"] }
+thiserror = "2.0.20"
+time = "0.3.45"
+uuid = "1.24.1"
+
+[dev-dependencies]
+p4inz-database = { path = "../database" }
+tokio = { version = "1.53.1", features = ["macros", "rt"] }

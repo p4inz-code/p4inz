@@ -7,3 +7,13 @@ rust-version.workspace = true
 authors.workspace = true
 
 [dependencies]
+base64 = "0.22"
+p4inz-common = { version = "0.1.0", path = "../common" }
+p4inz-errors = { version = "0.1.0", path = "../errors" }
+p4inz-knowledge = { version = "0.1.0", path = "../knowledge" }
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
+serde = { version = "1.0.229", features = ["derive"] }
+thiserror = "2.0.20"
+
+[dev-dependencies]
+tokio = { version = "1.53.1", features = ["macros", "rt"] }

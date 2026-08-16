@@ -7,3 +7,10 @@ rust-version.workspace = true
 authors.workspace = true
 
 [dependencies]
+p4inz-common = { version = "0.1.0", path = "../common" }
+p4inz-config = { version = "0.1.0", path = "../config" }
+sqlx = { version = "0.8.6", default-features = false, features = ["postgres", "runtime-tokio", "tls-rustls", "uuid", "migrate", "macros"] }
+thiserror = "2.0.20"
+
+[dev-dependencies]
+tokio = { version = "1.53.1", features = ["macros", "rt-multi-thread"] }
