@@ -69,4 +69,25 @@ mod tests {
         let error = AppError::unauthorized("no session");
         assert_eq!(describe(&error), "You need to be signed in to do that.");
     }
+
+    #[test]
+    fn not_found_includes_the_reason() {
+        let error = AppError::not_found("project 'p4inz' does not exist");
+        assert_eq!(describe(&error), "Couldn't find that: project 'p4inz' does not exist");
+    }
+
+    #[test]
+    fn conflict_includes_the_reason() {
+        let error = AppError::conflict("a project with that name already exists");
+        assert_eq!(
+            describe(&error),
+            "That conflicts with something existing: a project with that name already exists"
+        );
+    }
+
+    #[test]
+    fn unavailable_is_generic() {
+        let error = AppError::unavailable("database is down");
+        assert_eq!(describe(&error), "That's temporarily unavailable — please try again shortly.");
+    }
 }

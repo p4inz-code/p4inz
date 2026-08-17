@@ -108,9 +108,27 @@ mod tests {
     fn constructs_with_valid_fields() {
         let project = valid_project();
         assert_eq!(project.name().as_str(), "P4inz");
+        assert_eq!(project.description().as_str(), "Northbyte Studios' community intelligence bot");
+        assert_eq!(project.status().as_str(), "active");
         assert_eq!(project.technologies().len(), 2);
         assert!(project.repository().is_some());
         assert!(project.documentation().is_none());
+    }
+
+    #[test]
+    fn documentation_link_is_returned_when_present() {
+        let project = Project::new(
+            ProjectId::new(),
+            ProjectName::parse("P4inz").unwrap(),
+            ProjectDescription::parse("desc").unwrap(),
+            ProjectStatus::parse("active").unwrap(),
+            None,
+            Some(Link::parse("https://docs.p4inz.dev").unwrap()),
+            Vec::new(),
+        )
+        .unwrap();
+
+        assert_eq!(project.documentation().map(Link::as_str), Some("https://docs.p4inz.dev"));
     }
 
     #[test]

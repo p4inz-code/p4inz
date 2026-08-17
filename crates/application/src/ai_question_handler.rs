@@ -83,12 +83,20 @@ where
         }
 
         let prompt = assemble_prompt(question, &evidence);
+        let started_at = std::time::Instant::now();
         let completed =
             self.provider.complete(CompletionRequest::new(prompt)).await.and_then(|response| {
                 validate_response(&response, evidence.len())
                     .map(|()| response.text)
                     .map_err(p4inz_errors::AppError::from)
             });
+
+        // AI latency/error metrics (`docs/development/implementation_plan.md`
+        // section 16) — recorded for every attempt, success or fallback,
+        // since a falling-back call still spent real time waiting on (or
+        // failing against) the provider.
+        p4inz_observability::metrics::Metrics::global()
+            .record_ai_request(completed.is_ok(), started_at.elapsed());
 
         match completed {
             Ok(text) => Ok(text),

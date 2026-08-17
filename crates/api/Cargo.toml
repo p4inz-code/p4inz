@@ -7,3 +7,37 @@ rust-version.workspace = true
 authors.workspace = true
 
 [dependencies]
+axum = "0.8.9"
+axum-extra = { version = "0.12.6", features = ["cookie"] }
+base64 = "0.22"
+cookie = "0.18.2"
+hmac = "0.13.0"
+p4inz-application = { version = "0.1.0", path = "../application" }
+p4inz-audit = { version = "0.1.0", path = "../audit" }
+p4inz-common = { version = "0.1.0", path = "../common" }
+p4inz-database = { version = "0.1.0", path = "../database" }
+p4inz-errors = { version = "0.1.0", path = "../errors" }
+p4inz-infrastructure = { version = "0.1.0", path = "../infrastructure" }
+p4inz-jobs = { version = "0.1.0", path = "../jobs" }
+p4inz-knowledge = { version = "0.1.0", path = "../knowledge" }
+p4inz-observability = { version = "0.1.0", path = "../observability" }
+p4inz-search = { version = "0.1.0", path = "../search" }
+p4inz-security = { version = "0.1.0", path = "../security" }
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.11.0"
+time = { version = "0.3.45", features = ["formatting"] }
+tokio = { version = "1.53.1", features = ["time"] }
+tower-http = { version = "0.7.0", features = ["cors"] }
+tracing = { version = "0.1.44", default-features = false, features = ["std"] }
+utoipa = { version = "5.5.0", features = ["axum_extras"] }
+utoipa-axum = "0.2.0"
+uuid = { version = "1.24.1", features = ["v4"] }
+
+[dev-dependencies]
+http-body-util = "0.1.5"
+p4inz-common = { path = "../common" }
+p4inz-config = { path = "../config" }
+serde_json = "1"
+tokio = { version = "1.53.1", features = ["macros", "rt"] }
+tower = { version = "0.5.3", features = ["util"] }

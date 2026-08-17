@@ -1,0 +1,70 @@
+# Reproducible local/self-hosted deployment via Docker Compose
+# (`docs/development/implementation_plan.md` Milestone 53). Optional
+# relative to infra/deployment/ (Milestone 52's plain-process systemd
+# deployment) and infra/local/ (Milestone 52's no-container local dev) —
+# pick whichever fits; nothing else in this repository depends on this
+# file existing.
+#
+# `version:` is intentionally omitted — the Compose Specification (Compose
+# v2+) no longer uses it; modern `docker compose` ignores it with a
+# warning if present.
+#
+# Setup: copy .env.example to infra/docker/.env (this file's directory —
+# `env_file` below resolves relative to it) and fill in real values. Leave
+# DATABASE_URL as-is; it's overridden below to point at the `postgres`
+# service regardless of what's in .env, since Compose manages that
+# database's lifecycle here.
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: p4inz
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in infra/docker/.env}
+      POSTGRES_DB: p4inz
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U p4inz"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: ../..
+      dockerfile: infra/docker/Dockerfile
+      target: api
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      # Overrides whatever DATABASE_URL is set in .env — see the setup
+      # note above.
+      DATABASE_URL: postgres://p4inz:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in infra/docker/.env}@postgres:5432/p4inz
+    ports:
+      - "${API_PORT:-8080}:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "http://localhost:8080/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  worker:
+    build:
+      context: ../..
+      dockerfile: infra/docker/Dockerfile
+      target: worker
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://p4inz:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in infra/docker/.env}@postgres:5432/p4inz
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres-data:

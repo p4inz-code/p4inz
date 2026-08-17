@@ -1,0 +1,43 @@
+# systemd unit for the P4inz HTTP API process (`apps/p4inz`).
+#
+# Install: copy to /etc/systemd/system/p4inz-api.service, then:
+#   systemctl daemon-reload
+#   systemctl enable --now p4inz-api
+#
+# See infra/deployment/production/README.md for the full setup this unit
+# assumes (dedicated service user, /opt/p4inz layout, environment file).
+#
+# `systemctl stop`/`restart` sends SIGTERM: apps/p4inz/src/main.rs awaits
+# `p4inz_observability::shutdown::wait_for_shutdown_signal` (Milestone 52),
+# which — unlike a bare `tokio::signal::ctrl_c()` — actually observes
+# SIGTERM on Unix, so this stops gracefully within TimeoutStopSec rather
+# than being killed.
+
+[Unit]
+Description=P4inz API
+Documentation=https://github.com/p4inz-code/p4inz
+After=network-online.target postgresql.service
+Wants=network-online.target
+
+[Service]
+Type=exec
+User=p4inz
+Group=p4inz
+WorkingDirectory=/opt/p4inz
+EnvironmentFile=/opt/p4inz/.env
+ExecStart=/opt/p4inz/bin/p4inz
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+
+# Sandboxing — the process needs outbound network (PostgreSQL, GitHub,
+# optional AI provider, Discord) and inbound on API_PORT, but no
+# filesystem access beyond its own working directory.
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/opt/p4inz
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,41 @@
+# Reverse proxy for the P4inz API, terminating TLS in front of it.
+#
+# Caddy is chosen over nginx here for the "zero-cost infrastructure
+# policy" (docs/architecture/zero-cost.md): it is free/open-source and
+# provisions/renews TLS certificates automatically via Let's Encrypt, with
+# no paid certificate authority or manual renewal process.
+#
+# Install: copy to /etc/caddy/Caddyfile (replacing the placeholder domain
+# below), then `systemctl reload caddy` (or `enable --now caddy` if it
+# isn't running yet). Caddy must already be installed separately — see
+# https://caddyserver.com/docs/install.
+#
+# Replace with the real domain this API is served from.
+api.p4inz.example.com {
+	# Security response headers (Milestone 69: "Security Hardening") —
+	# JSON-API-appropriate, not a full page CSP (nothing here renders
+	# HTML). HSTS tells browsers to only ever reach this origin over
+	# HTTPS, even on a typo'd http:// link; nosniff stops a browser from
+	# reinterpreting a JSON response as something else based on content
+	# sniffing.
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "no-referrer"
+	}
+
+	# Matches API_PORT in .env.example (default 8080).
+	reverse_proxy localhost:8080
+
+	# /metrics (Milestone 51) exposes only aggregate counts/timings, never
+	# user content, but is still an operational endpoint, not a public API
+	# contract — restrict it to callers on the private network (adjust the
+	# range to match your actual scrape host, e.g. a self-hosted
+	# Prometheus on the same private network).
+	@metrics path /metrics
+	handle @metrics {
+		@denied not remote_ip private_ranges
+		respond @denied 403
+		reverse_proxy localhost:8080
+	}
+}

@@ -148,6 +148,70 @@ mod tests {
     }
 
     #[tokio::test]
+    async fn rejects_invalid_description_without_touching_repository() {
+        let repository = InMemoryProjectRepository::default();
+        let use_case = RegisterProject::new(&repository);
+
+        let mut input = valid_input();
+        input.description = "   ".to_string();
+
+        let err = use_case.execute(input).await.unwrap_err();
+        assert_eq!(err.kind(), ErrorKind::Validation);
+        assert!(repository.projects.lock().unwrap().is_empty());
+    }
+
+    #[tokio::test]
+    async fn rejects_invalid_status_without_touching_repository() {
+        let repository = InMemoryProjectRepository::default();
+        let use_case = RegisterProject::new(&repository);
+
+        let mut input = valid_input();
+        input.status = "   ".to_string();
+
+        let err = use_case.execute(input).await.unwrap_err();
+        assert_eq!(err.kind(), ErrorKind::Validation);
+        assert!(repository.projects.lock().unwrap().is_empty());
+    }
+
+    #[tokio::test]
+    async fn rejects_an_invalid_repository_link() {
+        let repository = InMemoryProjectRepository::default();
+        let use_case = RegisterProject::new(&repository);
+
+        let mut input = valid_input();
+        input.repository = Some("not a valid url".to_string());
+
+        let err = use_case.execute(input).await.unwrap_err();
+        assert_eq!(err.kind(), ErrorKind::Validation);
+        assert!(repository.projects.lock().unwrap().is_empty());
+    }
+
+    #[tokio::test]
+    async fn rejects_an_invalid_documentation_link() {
+        let repository = InMemoryProjectRepository::default();
+        let use_case = RegisterProject::new(&repository);
+
+        let mut input = valid_input();
+        input.documentation = Some("not a valid url".to_string());
+
+        let err = use_case.execute(input).await.unwrap_err();
+        assert_eq!(err.kind(), ErrorKind::Validation);
+        assert!(repository.projects.lock().unwrap().is_empty());
+    }
+
+    #[tokio::test]
+    async fn accepts_a_valid_documentation_link() {
+        let repository = InMemoryProjectRepository::default();
+        let use_case = RegisterProject::new(&repository);
+
+        let mut input = valid_input();
+        input.documentation = Some("https://docs.p4inz.dev".to_string());
+
+        let project = use_case.execute(input).await.unwrap();
+        assert!(project.documentation().is_some());
+    }
+
+    #[tokio::test]
     async fn rejects_duplicate_technologies() {
         let repository = InMemoryProjectRepository::default();
         let use_case = RegisterProject::new(&repository);

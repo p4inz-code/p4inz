@@ -72,4 +72,16 @@ mod tests {
             Err(QuestionError::TooLong { max: QUESTION_MAX_LEN })
         );
     }
+
+    #[test]
+    fn accepts_max_length() {
+        let max_len = "a".repeat(QUESTION_MAX_LEN);
+        assert!(Question::parse(max_len).is_ok());
+    }
+
+    #[test]
+    fn display_matches_as_str() {
+        let question = Question::parse("What is P4inz?").unwrap();
+        assert_eq!(question.to_string(), question.as_str());
+    }
 }

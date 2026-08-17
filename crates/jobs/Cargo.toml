@@ -7,5 +7,9 @@ rust-version.workspace = true
 authors.workspace = true
 
 [dependencies]
-tokio = { version = "1.53.1", features = ["signal", "rt", "macros"] }
+async-trait = "0.1.92"
+p4inz-domain = { version = "0.1.0", path = "../domain" }
+p4inz-errors = { version = "0.1.0", path = "../errors" }
+thiserror = "2.0.20"
+tokio = { version = "1.53.1", features = ["signal", "rt", "macros", "time"] }
 tracing = { version = "0.1.44", default-features = false, features = ["std"] }

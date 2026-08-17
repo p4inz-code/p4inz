@@ -39,6 +39,23 @@ pub async fn connect(
         .map_err(DatabaseError::Connect)
 }
 
+/// Builds a pool without performing any I/O — connecting is deferred to
+/// first actual use. For callers that need a real `PgPool` *value* to
+/// satisfy a type signature without a live PostgreSQL instance (e.g. a
+/// test exercising HTTP routing that never itself queries the database);
+/// production code should use [`connect`] instead, which fails fast if
+/// the database is unreachable rather than deferring that discovery.
+pub fn connect_lazy(
+    config: &DatabaseConfig,
+    settings: PoolSettings,
+) -> Result<PgPool, DatabaseError> {
+    PgPoolOptions::new()
+        .max_connections(settings.max_connections)
+        .acquire_timeout(settings.acquire_timeout)
+        .connect_lazy(config.url.expose_secret())
+        .map_err(DatabaseError::Connect)
+}
+
 /// Verifies the pool can reach the database.
 ///
 /// Intended for readiness/health checks (`docs/development/
@@ -57,6 +74,15 @@ mod tests {
         let settings = PoolSettings::default();
         assert_eq!(settings.max_connections, 5);
         assert_eq!(settings.acquire_timeout, Duration::from_secs(10));
+    }
+
+    #[tokio::test]
+    async fn connect_lazy_succeeds_without_a_reachable_database() {
+        let config = DatabaseConfig {
+            url: p4inz_common::Secret::new("postgres://user:pass@localhost/p4inz"),
+        };
+        let result = connect_lazy(&config, PoolSettings::default());
+        assert!(result.is_ok());
     }
 
     /// Requires a real, reachable PostgreSQL instance at `DATABASE_URL`.

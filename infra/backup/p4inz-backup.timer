@@ -1,0 +1,19 @@
+# Schedules p4inz-backup.service to run daily. Enable this unit, not the
+# .service directly — see p4inz-backup.service's install comment.
+
+[Unit]
+Description=Run the P4inz backup daily
+
+[Timer]
+OnCalendar=daily
+# If the server was off/asleep at the scheduled time, run the missed
+# backup as soon as it's back up, rather than silently skipping a day —
+# important for a self-hosted server that isn't guaranteed to be always on.
+Persistent=true
+# Spreads backup load if this timer pattern is reused across multiple
+# services/hosts, and avoids every backup landing at the exact same
+# wall-clock instant.
+RandomizedDelaySec=15m
+
+[Install]
+WantedBy=timers.target

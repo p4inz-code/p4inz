@@ -17,7 +17,7 @@ mod register_project;
 mod response_validation;
 
 pub use ai_question_handler::AiQuestionHandler;
-pub use knowledge_search::{KnowledgeSearch, SearchKnowledge};
+pub use knowledge_search::{KnowledgeSearch, SEARCH_PERMISSION, SearchKnowledge};
 pub use project_repository::ProjectRepository;
 pub use question::{QUESTION_MAX_LEN, Question, QuestionError};
 pub use question_handler::{QuestionHandler, UnavailableQuestionHandler};

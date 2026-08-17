@@ -15,7 +15,7 @@ mod pool;
 
 pub use error::DatabaseError;
 pub use migrate::run_migrations;
-pub use pool::{PoolSettings, connect, health_check};
+pub use pool::{PoolSettings, connect, connect_lazy, health_check};
 
 /// Re-exported so downstream crates can hold a pool without depending on
 /// `sqlx` directly for this one type.

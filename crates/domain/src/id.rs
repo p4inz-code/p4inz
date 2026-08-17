@@ -110,4 +110,40 @@ mod tests {
         let b = a;
         assert_eq!(a, b);
     }
+
+    #[test]
+    fn as_uuid_returns_the_wrapped_value() {
+        let uuid = Uuid::new_v4();
+        let id: Id<Marker> = Id::from_uuid(uuid);
+        assert_eq!(*id.as_uuid(), uuid);
+    }
+
+    #[test]
+    fn default_generates_a_usable_id() {
+        let a: Id<Marker> = Id::default();
+        let b: Id<Marker> = Id::default();
+        // Each call generates a fresh random id, the same as `Id::new` —
+        // `Default` is not a fixed/nil placeholder value.
+        assert_ne!(a, b);
+    }
+
+    #[test]
+    fn debug_format_matches_the_documented_shape() {
+        let uuid = Uuid::new_v4();
+        let id: Id<Marker> = Id::from_uuid(uuid);
+        assert_eq!(format!("{id:?}"), format!("Id({uuid})"));
+    }
+
+    #[test]
+    fn equal_ids_hash_equally() {
+        use std::collections::HashSet;
+
+        let uuid = Uuid::new_v4();
+        let a: Id<Marker> = Id::from_uuid(uuid);
+        let b: Id<Marker> = Id::from_uuid(uuid);
+
+        let mut set = HashSet::new();
+        set.insert(a);
+        assert!(!set.insert(b), "a second, equal id should already be present in the set");
+    }
 }

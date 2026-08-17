@@ -9,7 +9,12 @@ use p4inz_security::{Permission, PermissionSet, authorize};
 /// capability rather than per-category permissions: the specification
 /// does not define finer-grained retrieval scopes, and inventing them
 /// without a concrete requirement would be speculative.
-const SEARCH_PERMISSION: &str = "knowledge:search";
+///
+/// Public so callers that need to *grant* this permission (e.g. the
+/// Public Knowledge API, Milestone 39, building the fixed [`PermissionSet`]
+/// its anonymous callers are given) don't have to duplicate the literal
+/// string.
+pub const SEARCH_PERMISSION: &str = "knowledge:search";
 
 /// Searches published knowledge (`docs/PROJECT_SPEC.md` section 6: "the
 /// search system must never rely on the AI to decide whether a user may

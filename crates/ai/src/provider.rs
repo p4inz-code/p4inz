@@ -1,6 +1,21 @@
 use std::future::Future;
+use std::time::Duration;
 
 use p4inz_errors::AppResult;
+
+/// How long a provider implementation ([`crate::LocalAiProvider`],
+/// [`crate::OnlineAiProvider`]) waits for a response before giving up.
+///
+/// Without this, a hung or unresponsive provider blocks the calling
+/// request indefinitely — `reqwest::Client` applies no timeout by default
+/// (`Failure Tests`, Milestone 66: "outage/retry/recovery"; `docs/
+/// PROJECT_SPEC.md` section 7: "Deterministic features must continue
+/// working when... A provider times out" only holds if a timeout is ever
+/// actually enforced). 60 seconds is generous enough for real local/online
+/// model generation, while still bounding the worst case so
+/// [`p4inz_application::AiQuestionHandler`]'s deterministic fallback
+/// (Milestone 31) is reached in bounded time rather than never.
+pub(crate) const REQUEST_TIMEOUT: Duration = Duration::from_secs(60);
 
 /// A request to generate a completion from an AI provider.
 ///

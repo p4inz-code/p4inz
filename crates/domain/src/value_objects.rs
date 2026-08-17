@@ -204,6 +204,22 @@ mod tests {
     }
 
     #[test]
+    fn project_description_rejects_too_long() {
+        let too_long = "a".repeat(PROJECT_DESCRIPTION_MAX_LEN + 1);
+        assert_eq!(
+            ProjectDescription::parse(too_long),
+            Err(ProjectDescriptionError::TooLong { max: PROJECT_DESCRIPTION_MAX_LEN })
+        );
+    }
+
+    #[test]
+    fn project_description_trims_and_accepts_valid_value() {
+        let description = ProjectDescription::parse("  a Discord bot  ").unwrap();
+        assert_eq!(description.as_str(), "a Discord bot");
+        assert_eq!(description.to_string(), "a Discord bot");
+    }
+
+    #[test]
     fn project_status_accepts_arbitrary_non_empty_value() {
         assert!(ProjectStatus::parse("active").is_ok());
         assert!(ProjectStatus::parse("anything-not-yet-defined").is_ok());
@@ -215,13 +231,45 @@ mod tests {
     }
 
     #[test]
+    fn project_status_rejects_too_long() {
+        let too_long = "a".repeat(PROJECT_STATUS_MAX_LEN + 1);
+        assert_eq!(
+            ProjectStatus::parse(too_long),
+            Err(ProjectStatusError::TooLong { max: PROJECT_STATUS_MAX_LEN })
+        );
+    }
+
+    #[test]
+    fn project_status_as_str_and_display_match() {
+        let status = ProjectStatus::parse("active").unwrap();
+        assert_eq!(status.as_str(), "active");
+        assert_eq!(status.to_string(), "active");
+    }
+
+    #[test]
     fn technology_name_trims_and_accepts_valid_value() {
         let tech = TechnologyName::parse("  Rust ").unwrap();
         assert_eq!(tech.as_str(), "Rust");
+        assert_eq!(tech.to_string(), "Rust");
     }
 
     #[test]
     fn technology_name_rejects_empty() {
         assert_eq!(TechnologyName::parse(""), Err(TechnologyNameError::Empty));
+    }
+
+    #[test]
+    fn technology_name_rejects_too_long() {
+        let too_long = "a".repeat(TECHNOLOGY_NAME_MAX_LEN + 1);
+        assert_eq!(
+            TechnologyName::parse(too_long),
+            Err(TechnologyNameError::TooLong { max: TECHNOLOGY_NAME_MAX_LEN })
+        );
+    }
+
+    #[test]
+    fn project_name_display_matches_as_str() {
+        let name = ProjectName::parse("P4inz").unwrap();
+        assert_eq!(name.to_string(), name.as_str());
     }
 }

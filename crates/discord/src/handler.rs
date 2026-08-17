@@ -8,6 +8,7 @@ use serenity::all::{
 };
 use serenity::async_trait;
 use serenity::client::EventHandler;
+use tracing::Instrument;
 
 use crate::error_ux::describe;
 use crate::permissions::GuildRoleMapping;
@@ -76,24 +77,41 @@ impl<Q: QuestionHandler + Send + Sync + 'static> EventHandler for Handler<Q> {
             return;
         };
 
-        let name = command_interaction.data.name.as_str();
-        let Some(command) = self.registry.get(name) else {
-            tracing::warn!(command = name, "received unknown slash command");
-            return;
-        };
+        let name = command_interaction.data.name.clone();
+        // Discord interaction tracing (`docs/development/
+        // implementation_plan.md` section 16): correlates every log line
+        // produced while handling this interaction under Discord's own
+        // snowflake id, the same pattern job execution
+        // (`p4inz_jobs::execute::process_next`) and API requests
+        // (`p4inz_api::request_tracing::trace_requests`) already use.
+        let span = tracing::info_span!(
+            "discord_interaction",
+            interaction_id = %command_interaction.id,
+            command = %name,
+        );
 
-        if let Err(error) = command.execute(&ctx, &command_interaction).await {
-            tracing::error!(command = name, %error, "slash command handler failed");
+        async move {
+            let Some(command) = self.registry.get(&name) else {
+                tracing::warn!("received unknown slash command");
+                return;
+            };
 
-            let response =
-                CreateInteractionResponseMessage::new().content(describe(&error)).ephemeral(true);
-            // Best-effort: if the command already sent its own response
-            // before failing, this call itself fails and we've already
-            // logged above, so there's nothing further to recover.
-            let _ = command_interaction
-                .create_response(&ctx.http, CreateInteractionResponse::Message(response))
-                .await;
+            if let Err(error) = command.execute(&ctx, &command_interaction).await {
+                tracing::error!(%error, "slash command handler failed");
+
+                let response = CreateInteractionResponseMessage::new()
+                    .content(describe(&error))
+                    .ephemeral(true);
+                // Best-effort: if the command already sent its own response
+                // before failing, this call itself fails and we've already
+                // logged above, so there's nothing further to recover.
+                let _ = command_interaction
+                    .create_response(&ctx.http, CreateInteractionResponse::Message(response))
+                    .await;
+            }
         }
+        .instrument(span)
+        .await
     }
 
     async fn message(&self, ctx: Context, msg: Message) {
@@ -101,56 +119,66 @@ impl<Q: QuestionHandler + Send + Sync + 'static> EventHandler for Handler<Q> {
             return;
         }
 
-        let is_direct_message = msg.guild_id.is_none();
-        let directed_at_bot =
-            is_direct_message || msg.mentions_me(&ctx.http).await.unwrap_or(false);
-        if !directed_at_bot {
-            return;
-        }
+        let span = tracing::info_span!(
+            "discord_message",
+            message_id = %msg.id,
+            author = %msg.author.id,
+        );
 
-        let text = if is_direct_message {
-            msg.content.as_str()
-        } else {
-            strip_leading_mention(&msg.content)
-        };
+        async move {
+            let is_direct_message = msg.guild_id.is_none();
+            let directed_at_bot =
+                is_direct_message || msg.mentions_me(&ctx.http).await.unwrap_or(false);
+            if !directed_at_bot {
+                return;
+            }
 
-        let question = match Question::parse(text) {
-            Ok(question) => question,
-            Err(QuestionError::Empty) => return,
-            Err(QuestionError::TooLong { max }) => {
-                let error =
-                    AppError::validation(format!("question must be at most {max} characters"));
+            let text = if is_direct_message {
+                msg.content.as_str()
+            } else {
+                strip_leading_mention(&msg.content)
+            };
+
+            let question = match Question::parse(text) {
+                Ok(question) => question,
+                Err(QuestionError::Empty) => return,
+                Err(QuestionError::TooLong { max }) => {
+                    let error =
+                        AppError::validation(format!("question must be at most {max} characters"));
+                    let _ = msg.reply(&ctx.http, describe(&error)).await;
+                    return;
+                }
+            };
+
+            let rate_limit_key = format!("question:{}", msg.author.id);
+            if let Err(error) = self.question_rate_limiter.check(&rate_limit_key) {
                 let _ = msg.reply(&ctx.http, describe(&error)).await;
                 return;
             }
-        };
 
-        let rate_limit_key = format!("question:{}", msg.author.id);
-        if let Err(error) = self.question_rate_limiter.check(&rate_limit_key) {
-            let _ = msg.reply(&ctx.http, describe(&error)).await;
-            return;
-        }
+            // No guild role assignments have a way to be persisted/configured
+            // yet (Discord Permissions, Milestone 14, is the mapping
+            // mechanism only), so this resolves to an empty `PermissionSet`
+            // for every guild member until an administrator-configured
+            // mapping is injected here — fail closed, per the security
+            // model, rather than granting access by default.
+            let member_role_ids =
+                msg.member.as_ref().map(|member| member.roles.as_slice()).unwrap_or(&[]);
+            let granted = self.guild_role_mapping.resolve(member_role_ids);
+            let actor = AuditActor::User(format!("discord:{}", msg.author.id));
 
-        // No guild role assignments have a way to be persisted/configured
-        // yet (Discord Permissions, Milestone 14, is the mapping mechanism
-        // only), so this resolves to an empty `PermissionSet` for every
-        // guild member until an administrator-configured mapping is
-        // injected here — fail closed, per the security model, rather
-        // than granting access by default.
-        let member_role_ids =
-            msg.member.as_ref().map(|member| member.roles.as_slice()).unwrap_or(&[]);
-        let granted = self.guild_role_mapping.resolve(member_role_ids);
-        let actor = AuditActor::User(format!("discord:{}", msg.author.id));
-
-        match self.question_handler.answer(&question, &granted, actor).await {
-            Ok(answer) => {
-                let _ = msg.reply(&ctx.http, answer).await;
-            }
-            Err(error) => {
-                tracing::error!(%error, "question handler failed");
-                let _ = msg.reply(&ctx.http, describe(&error)).await;
+            match self.question_handler.answer(&question, &granted, actor).await {
+                Ok(answer) => {
+                    let _ = msg.reply(&ctx.http, answer).await;
+                }
+                Err(error) => {
+                    tracing::error!(%error, "question handler failed");
+                    let _ = msg.reply(&ctx.http, describe(&error)).await;
+                }
             }
         }
+        .instrument(span)
+        .await
     }
 }
 

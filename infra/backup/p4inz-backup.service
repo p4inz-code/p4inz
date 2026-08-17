@@ -1,0 +1,22 @@
+# systemd unit that runs infra/backup/backup.sh once. Triggered on a
+# schedule by p4inz-backup.timer, not enabled directly.
+#
+# Install: copy both this file and p4inz-backup.timer to
+# /etc/systemd/system/, and backup.sh to /opt/p4inz/bin/backup.sh, then:
+#   chmod +x /opt/p4inz/bin/backup.sh
+#   systemctl daemon-reload
+#   systemctl enable --now p4inz-backup.timer
+#
+# See infra/backup/README.md for the full strategy this implements.
+
+[Unit]
+Description=P4inz PostgreSQL backup
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=p4inz
+Group=p4inz
+EnvironmentFile=/opt/p4inz/.env
+Environment=BACKUP_DIR=/opt/p4inz/backups
+ExecStart=/opt/p4inz/bin/backup.sh

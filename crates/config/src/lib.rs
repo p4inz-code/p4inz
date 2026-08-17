@@ -15,7 +15,8 @@ mod environment;
 mod error;
 
 pub use app_config::{
-    AiConfig, AppConfig, CoreConfig, DatabaseConfig, DiscordConfig, GitHubConfig,
+    AiConfig, ApiConfig, AppConfig, AuthConfig, CoreConfig, DatabaseConfig, DiscordConfig,
+    GitHubConfig,
 };
 pub use environment::Environment;
 pub use error::ConfigError;

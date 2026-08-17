@@ -97,4 +97,54 @@ mod tests {
         assert_eq!(events.len(), 1);
         assert!(!events[0].outcome().is_success());
     }
+
+    /// A denied audit event that doesn't say *which* permission was
+    /// missing is close to useless for a real security investigation —
+    /// this locks in that the recorded event actually identifies it, not
+    /// just that a denial happened.
+    #[tokio::test]
+    async fn denied_audit_event_identifies_the_missing_permission() {
+        let granted = PermissionSet::empty();
+        let sink = RecordingSink::default();
+
+        let _ = authorize(&granted, &permission("admin:manage"), AuditActor::System, &sink).await;
+
+        let events = sink.events.lock().unwrap();
+        assert_eq!(events[0].target(), Some("admin:manage"));
+        match events[0].outcome() {
+            AuditOutcome::Failure { reason } => assert!(reason.contains("admin:manage")),
+            AuditOutcome::Success => panic!("expected a Failure outcome"),
+        }
+    }
+
+    /// The doc comment's central security claim: "Fails closed: any error
+    /// recording the audit event itself is also propagated rather than
+    /// silently ignored." Without this, a broken/unreachable audit sink
+    /// would silently turn into "authorization checks stop happening" —
+    /// exactly the failure mode "every authorization decision, success or
+    /// failure, is audited" exists to prevent. This is the only test that
+    /// actually exercises that claim; every other test here uses a sink
+    /// that never fails.
+    #[tokio::test]
+    async fn a_failing_audit_sink_denies_access_even_when_permission_would_be_granted() {
+        struct FailingSink;
+        impl AuditSink for FailingSink {
+            async fn record(&self, _event: &AuditEvent) -> AppResult<()> {
+                Err(AppError::internal("audit backend unreachable"))
+            }
+        }
+
+        let role =
+            Role::new(RoleName::parse("moderator").unwrap(), [permission("project:register")]);
+        let granted = PermissionSet::from_roles([&role]);
+
+        let result =
+            authorize(&granted, &permission("project:register"), AuditActor::System, &FailingSink)
+                .await;
+
+        assert!(
+            result.is_err(),
+            "a permission that would be granted must still be denied if the decision can't be audited"
+        );
+    }
 }

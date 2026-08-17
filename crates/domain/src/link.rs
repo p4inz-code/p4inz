@@ -116,4 +116,10 @@ mod tests {
         assert_eq!(Link::parse("https://"), Err(LinkError::MissingHost));
         assert_eq!(Link::parse("https:///path"), Err(LinkError::MissingHost));
     }
+
+    #[test]
+    fn display_matches_as_str() {
+        let link = Link::parse("https://example.com").unwrap();
+        assert_eq!(link.to_string(), link.as_str());
+    }
 }

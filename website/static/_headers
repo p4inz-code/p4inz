@@ -1,0 +1,30 @@
+# Security response headers (Milestone 69: "Security Hardening" —
+# closing a real gap: nothing set any of these before this milestone).
+#
+# Cloudflare Pages' own convention (`docs/architecture/runtime.md`:
+# "Cloudflare Pages may host static content" is this project's documented
+# hosting target) — reads this file from the site root and applies these
+# headers to every response automatically, no server config needed. If
+# self-hosting the built site behind a different web server instead
+# (nginx, Caddy), configure the same headers there — this file only
+# applies to Cloudflare Pages.
+#
+# Content-Security-Policy keeps 'unsafe-inline' for script-src/style-src:
+# SvelteKit's own build output includes an inline hydration bootstrap
+# script and inline style attributes by default (verified against this
+# project's actual `npm run build` output) — a stricter policy would
+# break the site, not just tighten it. Still meaningfully restricts the
+# common real-world attack this defends against: loading a *remote*
+# malicious script/object/frame, which every directive below blocks
+# regardless of the inline-script allowance.
+#
+# connect-src includes a placeholder API origin — replace
+# https://api.p4inz.example.com with this deployment's real API origin
+# (matching VITE_API_BASE_URL), the same placeholder-replacement pattern
+# infra/deployment/production/Caddyfile already uses for its own domain.
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://api.p4inz.example.com; object-src 'none'; base-uri 'self'; frame-ancestors 'none'

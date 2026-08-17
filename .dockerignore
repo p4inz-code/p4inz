@@ -1,0 +1,20 @@
+# Keeps the Docker build context (infra/docker/Dockerfile's `context: ../..`,
+# Milestone 53) small and — more importantly — makes sure `.env` (real
+# secrets) is never sent to the Docker daemon or baked into an image layer.
+
+.git/
+target/
+*.log
+
+.env
+.env.*
+!.env.example
+
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+website/node_modules/
+website/build/
+website/.svelte-kit/

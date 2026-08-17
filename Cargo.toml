@@ -29,3 +29,13 @@ repository = "https://github.com/p4inz-code/p4inz"
 homepage = "https://github.com/p4inz-code/p4inz"
 rust-version = "1.85"
 authors = ["Northbyte Studios"]
+
+# Performance/resource baseline (Milestone 67). Debug symbols aren't
+# useful in a deployed binary (`infra/deployment/`, `infra/docker/`) and
+# meaningfully inflate its size on disk and in a container image — no
+# behavioral change, so no reason not to strip them. LTO is deliberately
+# not enabled: this is a mostly I/O-bound service (network/database), so
+# LTO's runtime-speed benefit is marginal here, while its build-time cost
+# is real and immediate on every release build.
+[profile.release]
+strip = true

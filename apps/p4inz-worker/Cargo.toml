@@ -7,5 +7,12 @@ rust-version.workspace = true
 authors.workspace = true
 
 [dependencies]
+p4inz-config = { version = "0.1.0", path = "../../crates/config" }
+p4inz-database = { version = "0.1.0", path = "../../crates/database" }
+p4inz-infrastructure = { version = "0.1.0", path = "../../crates/infrastructure" }
 p4inz-jobs = { version = "0.1.0", path = "../../crates/jobs" }
+p4inz-knowledge = { version = "0.1.0", path = "../../crates/knowledge" }
+p4inz-observability = { version = "0.1.0", path = "../../crates/observability" }
+p4inz-search = { version = "0.1.0", path = "../../crates/search" }
 tokio = { version = "1.53.1", features = ["rt-multi-thread", "macros"] }
+tracing = { version = "0.1.44", default-features = false, features = ["std"] }

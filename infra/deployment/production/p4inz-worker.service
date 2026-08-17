@@ -1,0 +1,41 @@
+# systemd unit for the P4inz background worker process
+# (`apps/p4inz-worker`).
+#
+# Install: copy to /etc/systemd/system/p4inz-worker.service, then:
+#   systemctl daemon-reload
+#   systemctl enable --now p4inz-worker
+#
+# See infra/deployment/production/README.md for the full setup this unit
+# assumes (dedicated service user, /opt/p4inz layout, environment file).
+#
+# `systemctl stop`/`restart` sends SIGTERM: apps/p4inz-worker/src/main.rs
+# awaits `p4inz_observability::shutdown::wait_for_shutdown_signal`
+# (Milestone 52) instead of a bare `tokio::signal::ctrl_c()`, so a claimed
+# job is allowed to finish (`p4inz_jobs::run_worker_with`'s shutdown-safety
+# guarantee) before the process exits, rather than being killed mid-job.
+
+[Unit]
+Description=P4inz Worker
+Documentation=https://github.com/p4inz-code/p4inz
+After=network-online.target postgresql.service
+Wants=network-online.target
+
+[Service]
+Type=exec
+User=p4inz
+Group=p4inz
+WorkingDirectory=/opt/p4inz
+EnvironmentFile=/opt/p4inz/.env
+ExecStart=/opt/p4inz/bin/p4inz-worker
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/opt/p4inz
+
+[Install]
+WantedBy=multi-user.target
