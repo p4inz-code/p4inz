@@ -5,7 +5,7 @@ use thiserror::Error;
 /// The information category a [`crate::KnowledgeItem`] belongs to.
 ///
 /// Matches `docs/PROJECT_SPEC.md` section 4 ("Information Model") exactly
-/// — its four top-level categories (Northbyte Studios, People, Projects,
+/// — its four top-level categories (P4inz Interactive Labs, People, Projects,
 /// Community) are the complete, closed set the specification defines.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum KnowledgeCategory {

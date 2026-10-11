@@ -114,7 +114,7 @@ mod tests {
     fn valid_input() -> RegisterProjectInput {
         RegisterProjectInput {
             name: "P4inz".to_string(),
-            description: "Northbyte Studios' community intelligence bot".to_string(),
+            description: "P4inz Interactive Labs' community intelligence bot".to_string(),
             status: "active".to_string(),
             repository: Some("https://github.com/p4inz-code/p4inz".to_string()),
             documentation: None,

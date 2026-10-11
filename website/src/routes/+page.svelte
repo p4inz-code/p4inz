@@ -6,7 +6,7 @@
 	<title>P4inz</title>
 	<meta
 		name="description"
-		content="P4inz is Northbyte Studios' official community intelligence and information Discord application."
+		content="P4inz is P4inz Interactive Labs' official community intelligence and information Discord application."
 	/>
 </svelte:head>
 
@@ -14,10 +14,10 @@
 	<section class="hero">
 		<h1>P4inz</h1>
 		<p class="tagline">
-			Northbyte Studios' official community intelligence and information Discord application.
+			P4inz Interactive Labs' official community intelligence and information Discord application.
 		</p>
 		<p>
-			P4inz makes accurate, current, structured information about Northbyte Studios, its
+			P4inz makes accurate, current, structured information about P4inz Interactive Labs, its
 			projects, releases, community, and public resources accessible through Discord — and
 			through this site.
 		</p>

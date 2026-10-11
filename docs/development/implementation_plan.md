@@ -11,7 +11,7 @@
 
 ## 1. Implementation Contract
 
-P4inz is a serious, long-term Northbyte Studios product intended to remain maintainable for years without requiring a fundamental rewrite.
+P4inz is a serious, long-term P4inz Interactive Labs product intended to remain maintainable for years without requiring a fundamental rewrite.
 
 Implementation MUST:
 

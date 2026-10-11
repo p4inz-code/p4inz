@@ -27,7 +27,7 @@
 		<p>P4inz can maintain information about:</p>
 		<ul>
 			<li>
-				<strong>Northbyte Studios</strong> — organization overview, public identity, public links,
+				<strong>P4inz Interactive Labs</strong> — organization overview, public identity, public links,
 				policies, and announcements.
 			</li>
 			<li><strong>People</strong> — only intentionally published public information.</li>
@@ -47,7 +47,7 @@
 		<p>
 			P4inz distinguishes authoritative from non-authoritative information. Preferred
 			authoritative sources, in order, are official repository/project documentation, official
-			Northbyte Studios documentation, explicit administrator-maintained records, and official
+			P4inz Interactive Labs documentation, explicit administrator-maintained records, and official
 			announcements. GitHub may be used for frequently changing project information.
 		</p>
 		<p>AI-generated text is never itself treated as a source of truth.</p>

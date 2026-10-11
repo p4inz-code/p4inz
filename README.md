@@ -1,8 +1,8 @@
 # P4inz
 
-P4inz is Northbyte Studios' open-source Discord intelligence and community platform.
+P4inz is P4inz Interactive Labs' open-source Discord intelligence and community platform.
 
-It provides a structured way for community members to discover accurate information about Northbyte Studios, its projects, releases, documentation, and community resources.
+It provides a structured way for community members to discover accurate information about P4inz Interactive Labs, its projects, releases, documentation, and community resources.
 
 ## Goals
 

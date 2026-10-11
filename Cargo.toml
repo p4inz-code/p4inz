@@ -28,7 +28,7 @@ license = "Apache-2.0"
 repository = "https://github.com/p4inz-code/p4inz"
 homepage = "https://github.com/p4inz-code/p4inz"
 rust-version = "1.85"
-authors = ["Northbyte Studios"]
+authors = ["P4inz Interactive Labs"]
 
 # Performance/resource baseline (Milestone 67). Debug symbols aren't
 # useful in a deployed binary (`infra/deployment/`, `infra/docker/`) and

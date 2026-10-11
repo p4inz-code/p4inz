@@ -9,7 +9,7 @@ use crate::value_objects::{ProjectDescription, ProjectName, ProjectStatus, Techn
 /// Identifies a [`Project`].
 pub type ProjectId = Id<Project>;
 
-/// A Northbyte Studios project, as described in `docs/PROJECT_SPEC.md`
+/// A P4inz Interactive Labs project, as described in `docs/PROJECT_SPEC.md`
 /// section 4 ("Information Model" -> "Projects").
 ///
 /// `Releases`, `Public roadmap information` and `Updates` are named in the
@@ -92,7 +92,7 @@ mod tests {
         Project::new(
             ProjectId::new(),
             ProjectName::parse("P4inz").unwrap(),
-            ProjectDescription::parse("Northbyte Studios' community intelligence bot").unwrap(),
+            ProjectDescription::parse("P4inz Interactive Labs' community intelligence bot").unwrap(),
             ProjectStatus::parse("active").unwrap(),
             Some(Link::parse("https://github.com/p4inz-code/p4inz").unwrap()),
             None,
@@ -108,7 +108,7 @@ mod tests {
     fn constructs_with_valid_fields() {
         let project = valid_project();
         assert_eq!(project.name().as_str(), "P4inz");
-        assert_eq!(project.description().as_str(), "Northbyte Studios' community intelligence bot");
+        assert_eq!(project.description().as_str(), "P4inz Interactive Labs' community intelligence bot");
         assert_eq!(project.status().as_str(), "active");
         assert_eq!(project.technologies().len(), 2);
         assert!(project.repository().is_some());

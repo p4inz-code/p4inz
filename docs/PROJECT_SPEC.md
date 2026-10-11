@@ -2,13 +2,13 @@
 
 ## 1. Identity
 
-P4inz is Northbyte Studios' official community intelligence and information Discord application.
+P4inz is P4inz Interactive Labs' official community intelligence and information Discord application.
 
-P4inz exists to make accurate, current, structured information about Northbyte Studios, its projects, releases, community, and public resources accessible through Discord.
+P4inz exists to make accurate, current, structured information about P4inz Interactive Labs, its projects, releases, community, and public resources accessible through Discord.
 
 Primary identity:
 - Product: P4inz
-- Organization: Northbyte Studios
+- Organization: P4inz Interactive Labs
 - Primary community: Northbyte Studios Discord
 - Repository: https://github.com/p4inz-code/p4inz
 
@@ -17,7 +17,7 @@ Primary identity:
 P4inz should allow community members to ask natural-language questions and receive useful, concise, accurate answers based on maintained and verifiable project information.
 
 Examples:
-- Northbyte Studios information
+- P4inz Interactive Labs information
 - Founder/public identity information
 - Projects and their current status
 - Project documentation
@@ -44,7 +44,7 @@ Examples:
 
 P4inz may maintain information about:
 
-### Northbyte Studios
+### P4inz Interactive Labs
 - Organization overview
 - Public identity
 - Public links
@@ -81,7 +81,7 @@ P4inz must distinguish between authoritative and non-authoritative information.
 
 Preferred authoritative sources:
 1. Official repository/project documentation
-2. Official Northbyte Studios documentation
+2. Official P4inz Interactive Labs documentation
 3. Explicit administrator-maintained records
 4. Official announcements
 5. Other explicitly trusted sources
@@ -200,7 +200,7 @@ P4inz V1 is complete when a community member can:
 1. Interact with P4inz through Discord.
 2. Ask supported natural-language questions.
 3. Receive accurate answers from maintained knowledge.
-4. Access current Northbyte Studios/project information.
+4. Access current P4inz Interactive Labs/project information.
 5. Receive useful source context where appropriate.
 6. Use community support features.
 7. Rely on permission-controlled administrative functions.

@@ -13,7 +13,7 @@ use thiserror::Error;
 pub enum SourceKind {
     /// Official repository/project documentation.
     Repository,
-    /// Official Northbyte Studios documentation.
+    /// Official P4inz Interactive Labs documentation.
     OfficialDocumentation,
     /// Explicit administrator-maintained records.
     Administrator,

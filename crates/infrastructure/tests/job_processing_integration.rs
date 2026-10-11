@@ -192,7 +192,7 @@ async fn a_triggered_sync_job_is_claimed_processed_and_persisted() {
     let mut registry = JobHandlerRegistry::new();
     let adapter = FixedAdapter(RawDocument {
         title: "p4inz-code/p4inz".to_string(),
-        body: "A Discord bot for Northbyte Studios.".to_string(),
+        body: "A Discord bot for P4inz Interactive Labs.".to_string(),
         fetched_at: SystemTime::now(),
     });
     registry.insert(GITHUB_SYNC_JOB_KIND, GitHubSyncHandler::new(adapter, knowledge_repository));
