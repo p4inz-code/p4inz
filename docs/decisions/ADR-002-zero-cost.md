@@ -1,4 +1,4 @@
-# ADR-002 — Zero-Cost Infrastructure
+# ADR-002: zero-cost infrastructure
 
 ## Decision
 

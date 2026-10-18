@@ -1,4 +1,4 @@
-# Zero-Cost Infrastructure Policy
+# Zero-Cost infrastructure policy
 
 P4inz must remain functional without paid infrastructure.
 

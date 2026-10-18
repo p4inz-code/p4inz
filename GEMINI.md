@@ -1,4 +1,4 @@
-# P4inz — Gemini Instructions
+# P4inz: gemini instructions
 
 Follow `AGENTS.md` as the primary project-wide AI-agent policy.
 

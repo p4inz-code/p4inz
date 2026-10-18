@@ -1,4 +1,4 @@
-# P4inz — Product Specification
+# P4inz: product specification
 
 ## 1. Identity
 
@@ -27,7 +27,7 @@ Examples:
 - Policies and notices
 - Frequently asked questions
 
-## 3. Core Principles
+## 3. Core principles
 
 1. Truth over confidence.
 2. Current information over stale information.
@@ -40,7 +40,7 @@ Examples:
 9. AI assists retrieval and communication; it does not define truth.
 10. The system must remain maintainable for years.
 
-## 4. Information Model
+## 4. Information model
 
 P4inz may maintain information about:
 
@@ -75,7 +75,7 @@ Only intentionally published public information should be stored.
 - Notices
 - Frequently asked questions
 
-## 5. Source of Truth
+## 5. Source of truth
 
 P4inz must distinguish between authoritative and non-authoritative information.
 
@@ -90,7 +90,7 @@ GitHub may be used for frequently changing project information where appropriate
 
 AI-generated text is never itself a source of truth.
 
-## 6. Knowledge Requirements
+## 6. Knowledge requirements
 
 Knowledge should support:
 - Provenance
@@ -103,7 +103,7 @@ Knowledge should support:
 
 Stale or conflicting information must not silently appear authoritative.
 
-## 7. AI Requirements
+## 7. AI requirements
 
 AI must:
 - Use retrieved information when answering factual questions.
@@ -123,7 +123,7 @@ AI must never:
 - Modify authoritative knowledge without an authorized workflow.
 - Invent project facts to make an answer sound complete.
 
-## 8. Discord Requirements
+## 8. Discord requirements
 
 P4inz should support:
 - Slash commands
@@ -193,7 +193,7 @@ The system must maintain clear internal crate boundaries.
 
 Microservices are not required unless future evidence justifies extraction.
 
-## 13. V1 Definition
+## 13. V1 definition
 
 P4inz V1 is complete when a community member can:
 
@@ -220,7 +220,7 @@ V1 does not attempt to become:
 - A mandatory paid AI service
 - An unrestricted agent capable of executing arbitrary commands
 
-## 15. Long-Term Direction
+## 15. Long-Term direction
 
 The architecture should allow future expansion without requiring a fundamental rewrite.
 

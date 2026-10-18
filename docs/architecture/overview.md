@@ -1,6 +1,6 @@
-# P4inz Architecture
+# P4inz architecture
 
-## Architecture Style
+## Architecture style
 
 P4inz uses a Rust Cargo workspace with a modular-monolith architecture.
 
@@ -11,24 +11,24 @@ The system is initially deployed as:
 
 Internal crate boundaries are explicit so components can be extracted later if justified.
 
-## Core Boundaries
+## Core boundaries
 
-- `domain` — business entities and rules
-- `application` — application use cases
-- `api` — HTTP interface
-- `discord` — Discord adapter
-- `knowledge` — authoritative knowledge lifecycle
-- `search` — retrieval and ranking
-- `ai` — AI orchestration/provider abstraction
-- `security` — authentication, authorization, validation, secrets
-- `database` — PostgreSQL implementation
-- `jobs` — asynchronous work
-- `audit` — security/business audit events
-- `observability` — logs, metrics, tracing, health
-- `errors` — shared error taxonomy
-- `infrastructure` — external implementations
-- `config` — validated configuration
-- `common` — minimal generic primitives
+- `domain`: business entities and rules
+- `application`: application use cases
+- `api`: HTTP interface
+- `discord`: Discord adapter
+- `knowledge`: authoritative knowledge lifecycle
+- `search`: retrieval and ranking
+- `ai`: AI orchestration/provider abstraction
+- `security`: authentication, authorization, validation, secrets
+- `database`: PostgreSQL implementation
+- `jobs`: asynchronous work
+- `audit`: security/business audit events
+- `observability`: logs, metrics, tracing, health
+- `errors`: shared error taxonomy
+- `infrastructure`: external implementations
+- `config`: validated configuration
+- `common`: minimal generic primitives
 
 ## Principles
 

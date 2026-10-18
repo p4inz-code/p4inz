@@ -1,8 +1,8 @@
-# P4inz — AI Agent Instructions
+# P4inz: AI agent instructions
 
 This is the primary instruction document for AI coding agents.
 
-## Before Every Task
+## Before every task
 
 Read:
 1. `AGENTS.md`
@@ -13,7 +13,7 @@ Read:
 
 Inspect existing implementation before creating or modifying code.
 
-## Priority Order
+## Priority order
 
 When requirements conflict, use this order:
 
@@ -26,7 +26,7 @@ When requirements conflict, use this order:
 7. Performance
 8. Implementation speed
 
-## Implementation Workflow
+## Implementation workflow
 
 Inspect
 → Understand
@@ -109,7 +109,7 @@ At minimum when applicable:
 
 Add tests for meaningful behavior and failure paths.
 
-## Error Handling
+## Error handling
 
 Errors must:
 - Be typed where practical.
@@ -129,7 +129,7 @@ AI agents must NOT:
 
 Git operations are handled separately by the project owner.
 
-## File Safety
+## File safety
 
 Do not:
 - Delete unrelated files.
@@ -137,7 +137,7 @@ Do not:
 - Replace working architecture without justification.
 - Modify generated files manually when regeneration is available.
 
-## When Blocked
+## When blocked
 
 If requirements conflict or architecture is insufficient:
 1. Stop implementation of the conflicting portion.
@@ -147,7 +147,7 @@ If requirements conflict or architecture is insufficient:
 
 Do not silently invent requirements.
 
-## Completion Report
+## Completion report
 
 At the end of every implementation session report:
 

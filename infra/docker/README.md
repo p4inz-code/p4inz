@@ -1,6 +1,6 @@
-# Docker/Compose Deployment
+# Docker/Compose deployment
 
-Reproducible deployment via containers (Milestone 53) — optional, per
+Reproducible deployment via containers (Milestone 53), optional, per
 `docs/development/implementation_plan.md` section 17: "Docker/Compose may
 be used where it improves reproducibility." `infra/deployment/` (plain
 systemd services, Milestone 52) and `infra/local/` (no containers at all)
@@ -9,9 +9,9 @@ Docker.
 
 ## What's here
 
-- `Dockerfile` — multi-stage build producing two minimal runtime images
+- `Dockerfile`: multi-stage build producing two minimal runtime images
   (`api` and `worker` targets) from one shared compile stage.
-- `docker-compose.yml` — runs `api`, `worker`, and a `postgres` service
+- `docker-compose.yml`: runs `api`, `worker`, and a `postgres` service
   together.
 
 ## Usage
@@ -37,20 +37,20 @@ docker compose logs -f api worker
 ```
 
 Stop with `docker compose down` (add `-v` to also discard the PostgreSQL
-volume — never do this against real data without a verified backup; see
+volume, never do this against real data without a verified backup; see
 Milestone 54/55). Both `api` and `worker` run their binary directly as
 container PID 1 (`ENTRYPOINT` in exec form, no shell wrapper), so
 `docker compose stop`'s `SIGTERM` reaches
 `p4inz_observability::shutdown::wait_for_shutdown_signal` (Milestone 51/
-52) the same way it does under systemd — graceful shutdown, not a kill.
+52) the same way it does under systemd, graceful shutdown, not a kill.
 
 ## Environment limitations
 
 Docker is not available in the environment this milestone was implemented
 in (`docker --version` fails: command not found). The `Dockerfile` and
-`docker-compose.yml` above were authored and statically reviewed —
+`docker-compose.yml` above were authored and statically reviewed
 syntax, stage references, health checks, and variable substitution were
-checked by hand — but **not build-verified or run-verified** against a
+checked by hand, but **not build-verified or run-verified** against a
 real Docker daemon. Verify with `docker compose up --build` in an
 environment with Docker installed before relying on this in production.
 

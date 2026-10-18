@@ -13,9 +13,9 @@ labels: bug
 2.
 3.
 
-## Expected Behavior
+## Expected behavior
 
-## Actual Behavior
+## Actual behavior
 
 ## Environment
 
@@ -23,6 +23,6 @@ labels: bug
 - OS:
 - Deployment mode:
 
-## Logs / Evidence
+## Logs / evidence
 
 <!-- Remove secrets and private information. -->

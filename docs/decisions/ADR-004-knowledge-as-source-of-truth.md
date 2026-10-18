@@ -1,4 +1,4 @@
-# ADR-004 — Knowledge Is the Source of Truth
+# ADR-004: knowledge is the source of truth
 
 ## Decision
 

@@ -11,6 +11,6 @@ labels: enhancement
 
 ## Alternatives
 
-## Security / Privacy Considerations
+## Security / privacy considerations
 
-## Additional Context
+## Additional context

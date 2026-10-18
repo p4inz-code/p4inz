@@ -1,4 +1,4 @@
-# ADR-003 — AI Provider Abstraction
+# ADR-003: AI provider abstraction
 
 ## Decision
 

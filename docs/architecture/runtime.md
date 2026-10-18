@@ -1,4 +1,4 @@
-# Runtime Architecture
+# Runtime architecture
 
 ## Processes
 
@@ -10,7 +10,7 @@ Responsible for:
 - request orchestration
 - lightweight application work
 
-### P4inz Worker
+### P4inz worker
 
 Responsible for:
 - synchronization

@@ -1,6 +1,6 @@
-# Implementation Rules
+# Implementation rules
 
-## Session Model
+## Session model
 
 One implementation prompt should represent one meaningful milestone that can reasonably be completed in approximately one focused hour.
 
@@ -8,7 +8,7 @@ Agents may combine closely related work when doing so improves consistency.
 
 Do not artificially split work into tiny tasks.
 
-## Required Loop
+## Required loop
 
 Inspect
 → Implement
@@ -17,7 +17,7 @@ Inspect
 → Validate
 → Report
 
-## Scope Control
+## Scope control
 
 A session must have a clearly defined scope.
 
@@ -44,7 +44,7 @@ Avoid:
 - Unnecessary macros
 - Unnecessary unsafe Rust
 
-## Definition of Done
+## Definition of done
 
 A milestone is done when:
 - Implementation works.

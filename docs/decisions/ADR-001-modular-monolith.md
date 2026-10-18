@@ -1,4 +1,4 @@
-# ADR-001 — Modular Monolith
+# ADR-001: modular monolith
 
 ## Decision
 

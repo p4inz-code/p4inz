@@ -1,4 +1,4 @@
-# P4inz Roadmap
+# P4inz roadmap
 
 ## Status
 
@@ -9,21 +9,21 @@
 - Implementation: NOT STARTED
 - V1: NOT STARTED
 
-## Development Model
+## Development model
 
 One implementation prompt represents approximately one focused one-hour coding session.
 
 Dedicated audits, security reviews, integration reviews, and final release audits are EXTRA and are not counted as implementation sessions.
 
 Target:
-- Normal implementation range: 30–40 sessions
+- Normal implementation range: 30-40 sessions
 - Working target: ~35 sessions
 - Additional sessions are allowed when correctness requires them.
 
 Prompt count is not a quality metric.
 
-## Phase 1 — Core Foundation
-Target: 2–3 sessions
+## Phase 1: core foundation
+Target: 2-3 sessions
 
 - Configuration
 - Typed errors
@@ -35,8 +35,8 @@ Target: 2–3 sessions
 - Dependency wiring
 - Foundation tests
 
-## Phase 2 — Domain + Database
-Target: 3–4 sessions
+## Phase 2: domain + database
+Target: 3-4 sessions
 
 - Domain entities
 - Database abstraction
@@ -46,8 +46,8 @@ Target: 3–4 sessions
 - Transactions
 - Persistence tests
 
-## Phase 3 — Application Layer
-Target: 2–3 sessions
+## Phase 3: application layer
+Target: 2-3 sessions
 
 - Use cases
 - Service boundaries
@@ -56,8 +56,8 @@ Target: 2–3 sessions
 - Audit events
 - Application tests
 
-## Phase 4 — Discord Core
-Target: 3–4 sessions
+## Phase 4: Discord core
+Target: 3-4 sessions
 
 - Discord gateway
 - Bot lifecycle
@@ -68,8 +68,8 @@ Target: 3–4 sessions
 - Error responses
 - Reconnection handling
 
-## Phase 5 — Community Features
-Target: 3–4 sessions
+## Phase 5: community features
+Target: 3-4 sessions
 
 - Information commands
 - Support/ticket integration
@@ -79,8 +79,8 @@ Target: 3–4 sessions
 - Notices
 - Administrative workflows
 
-## Phase 6 — Knowledge System
-Target: 4–5 sessions
+## Phase 6: knowledge system
+Target: 4-5 sessions
 
 - Knowledge entities
 - Sources
@@ -93,8 +93,8 @@ Target: 4–5 sessions
 - Conflict detection
 - Controlled administration
 
-## Phase 7 — Search
-Target: 2–3 sessions
+## Phase 7: search
+Target: 2-3 sessions
 
 - Structured retrieval
 - Full-text search
@@ -103,8 +103,8 @@ Target: 2–3 sessions
 - Permission-aware retrieval
 - Search tests
 
-## Phase 8 — AI
-Target: 3–4 sessions
+## Phase 8: AI
+Target: 3-4 sessions
 
 - AI provider abstraction
 - Retrieval-augmented generation
@@ -115,8 +115,8 @@ Target: 3–4 sessions
 - Provider failure handling
 - Local-model support
 
-## Phase 9 — Security Hardening
-Target: 2–3 sessions
+## Phase 9: security hardening
+Target: 2-3 sessions
 
 - Authorization audit
 - Input validation audit
@@ -126,7 +126,7 @@ Target: 2–3 sessions
 - Data isolation
 - Abuse resistance
 
-## Phase 10 — Workers + Synchronization
+## Phase 10: workers + synchronization
 Target: 2 sessions
 
 - Job execution
@@ -136,8 +136,8 @@ Target: 2 sessions
 - Failure recovery
 - Idempotency
 
-## Phase 11 — Reliability + Testing
-Target: 2–3 sessions
+## Phase 11: reliability + testing
+Target: 2-3 sessions
 
 - Integration coverage
 - Failure-path coverage
@@ -147,7 +147,7 @@ Target: 2–3 sessions
 - Discord failure testing
 - AI evaluation
 
-## Phase 12 — Production
+## Phase 12: production
 Target: 2 sessions
 
 - Docker deployment
@@ -158,8 +158,8 @@ Target: 2 sessions
 - Restore procedure
 - Deployment documentation
 
-## Phase 13 — Release
-Target: 1–2 sessions
+## Phase 13: release
+Target: 1-2 sessions
 
 - Versioning
 - Release process
@@ -168,7 +168,7 @@ Target: 1–2 sessions
 - Production configuration
 - Final V1 preparation
 
-## Dedicated Review Work
+## Dedicated review work
 
 Not included in implementation-session count:
 
@@ -181,7 +181,7 @@ Not included in implementation-session count:
 
 These should happen between major phases when appropriate.
 
-## Completion Rule
+## Completion rule
 
 A phase is complete only when:
 - Its implementation is functional.

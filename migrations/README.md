@@ -16,7 +16,7 @@ migrations/
 
 - Four-digit, zero-padded, strictly increasing sequence number, then an
   underscore, then a short `snake_case` description.
-- Each file contains forward-only SQL. There is no paired `.down.sql` —
+- Each file contains forward-only SQL. There is no paired `.down.sql`
   correcting a mistake means writing a new forward migration, not editing or
   reverting a merged one (`docs/PROJECT_SPEC.md` section 6: "Historical
   versions must not be silently destroyed").

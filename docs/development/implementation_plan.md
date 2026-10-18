@@ -1,4 +1,4 @@
-# P4inz — Implementation Plan
+# P4inz: implementation Plan
 
 **Status:** IMPLEMENTATION-READY  
 **Specification:** PRE-FREEZE / FINAL AUDIT REQUIRED  
@@ -9,7 +9,7 @@
 
 ---
 
-## 1. Implementation Contract
+## 1. Implementation contract
 
 P4inz is a serious, long-term P4inz Interactive Labs product intended to remain maintainable for years without requiring a fundamental rewrite.
 

@@ -1,4 +1,4 @@
-# P4inz — Claude Code Instructions
+# P4inz: claude code instructions
 
 Read `AGENTS.md` and `ROADMAP.md` before making changes.
 

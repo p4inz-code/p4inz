@@ -1,6 +1,6 @@
-# Local Development Deployment
+# Local development deployment
 
-Runs both P4inz processes directly on your machine — no containers
+Runs both P4inz processes directly on your machine. No containers
 required (`docs/development/implementation_plan.md` section 17:
 "Local development machine" is a supported deployment model on its own;
 Docker/Compose is optional reproducibility tooling covered separately by
@@ -12,7 +12,7 @@ Milestone 53, under `infra/docker/`).
   the root `Cargo.toml`; `rustup show` picks it up automatically if a
   `rust-toolchain.toml` is present, otherwise install 1.85+).
 - A local or self-hosted PostgreSQL instance (`docs/architecture/
-  zero-cost.md`: "self-hosted PostgreSQL" is the preferred option — no
+  zero-cost.md`: "self-hosted PostgreSQL" is the preferred option. No
   managed/paid database is required for local development).
 
 ## Steps
@@ -24,13 +24,13 @@ Milestone 53, under `infra/docker/`).
    ```
 
    At minimum, `DATABASE_URL` must point at a running PostgreSQL instance.
-   Every other variable is optional — unset optional groups (Discord,
+   Every other variable is optional, unset optional groups (Discord,
    GitHub, AI, web/admin auth) simply disable the feature they configure;
    see the comments in `.env.example` for which variables travel together.
 
 2. Load `.env` into your shell (any `.env`-loading tool works; `p4inz`/
    `p4inz-worker` read configuration from the process environment, not
-   from the file directly — `AppConfig::from_env`, `crates/config/src/
+   from the file directly, `AppConfig::from_env`, `crates/config/src/
    app_config.rs`).
 
 3. Run the API process:
@@ -40,7 +40,7 @@ Milestone 53, under `infra/docker/`).
    ```
 
    This connects to PostgreSQL, runs pending migrations automatically
-   (`p4inz_database::run_migrations`, called at startup — there is no
+   (`p4inz_database::run_migrations`, called at startup. There is no
    separate manual migration step), and serves the HTTP API on
    `API_PORT` (default `8080`). Confirm it's up:
 
@@ -56,8 +56,8 @@ Milestone 53, under `infra/docker/`).
    cargo run -p p4inz-worker
    ```
 
-   Handles background jobs — currently scheduled/manual GitHub
-   synchronization (Milestone 35) — on the poll interval and schedule
+   Handles background jobs, currently scheduled/manual GitHub
+   synchronization (Milestone 35), on the poll interval and schedule
    documented in `apps/p4inz-worker/src/main.rs`.
 
 5. Stop either process with Ctrl-C. Both shut down gracefully: the API
@@ -80,5 +80,5 @@ Both processes emit structured JSON logs to stdout (Milestone 51,
 for the Discord gateway; that wiring does not exist yet (Milestone 11
 delivered a tested, working `p4inz_discord::client::build`/`run`, but no
 binary calls it). This is a pre-existing gap outside this milestone's
-scope (see the Milestone 52 report) — flagged here for anyone following
+scope (see the Milestone 52 report), flagged here for anyone following
 this guide who expects Discord functionality to be running.
